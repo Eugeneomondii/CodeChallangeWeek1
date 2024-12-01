@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Net Salary Calculator</title>
+    <style>
+        body{
+            font-family: Arial,sanserif;
+            margin: 20px;
+            padding: 10px;
+        }
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+        .output{
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1> Net Salary Calculator</h1>
+    <form id="SalaryForm">
+        <label>
+            Basic Salary:
+            <input type="number"
+            id="basic Salary" required>
+        </label>
+        <label>
+            Benefits: 
+            <input type="number"
+            id="benefits" required>
+        </label>
+        <button type="submit">Calculate</button>
+    </form>
+    <div class="output"
+    id="output"></div>
+    <script>
+        document.getElementById('salaryForm').addEventListener('submit',
+            function(e){
+                e.preventDefault();
+                //Inputs
+                const basicSalary = parseFloat(document.getElementById('basicSalary').value);
+                const benefits = parseFloat(getElementById('benefits').value);
+                const grossSalary = basicSalary + benefits;
+                //Deductions
+                const nssf = Math.min(0.06 * grossSalary,1800);// Tier I limit
+                const nhif = calculateNHIF(grossSalary);
+                const taxableIncome= grossSalary - nssf;
+                const paye = calculatePAYE(taxableIncome);
+                //net salary
+                const netSalary = grossSalary - nssf - nhif- paye;
+                //display results
+                const output = `<p>Gross Salary: KES ${grossSalary.toFixed(2)}</p>
+                <p>NSSF Deductions: KES ${nssf.toFixed(2)}</p>
+                <p>NHIF Deductions: KES ${nhif.toFixed(2)}</p>
+                <p>PAYE (Tax): KES ${paye.toFixed(2)}</p>
+                <p><strong>Net Salary: KES ${netSalary.toFixed(2)}<strong></p> `;
+                    document.getElementById('output').innerHTML = output;
+            });
+            function calculateNHIF(salary){
+                if(salary<= 5999)return 150;
+                if(salary<= 7999)return 300;
+                if(salary<= 11999)return 400;
+                if(salary<= 14999)return 500;
+                if(salary<= 19999)return 600;
+                if(salary<= 24999)return 750;
+                if(salary<= 29999)return 850;
+                if(salary<= 34999)return 900;
+                if(salary<= 39999)return 950;
+                if(salary<= 40000)return 1000;
+            }
+            function
+            calculatePAYE(income){
+                if(income<= 24000)
+                return income * 0.1;
+            if(income <= 32333)
+            return 2400 + (income - 24000) * 0.25;
+        return 2400 + 2083.25 + (income - 32333) * 0.3;
+            }
+    </script>
+</body>
+</html>
